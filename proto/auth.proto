@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = ".";
+
+// Auth is service for managing permissions and roles.
+service Auth {
+  // Register registers a new user.
+  rpc Signup (SignupRequest) returns (SignupResponse);
+  // Login logs in a user and returns an auth token.
+  rpc Login (LoginRequest) returns (LoginResponse);
+  // Logout user and delete auth token.
+  rpc Validate (ValidateRequest) returns (ValidateResponse);
+}
+
+message SignupRequest {
+  string email = 1; // Email of the user to register.
+  string password = 2; // Password of the user to register.
+}
+
+message SignupResponse {
+  bool ok = 1; // Ok indicate that user has been registered.
+}
+
+message LoginRequest {
+  string email = 1; // Email of the user to login.
+  string password = 2; // Password of the user to login.
+}
+
+message LoginResponse {
+  string token = 1; // Auth token of the logged in user.
+}
+
+message ValidateRequest {
+  string token = 1; // Auth token of the user to authenticate.
+}
+
+message ValidateResponse {
+  int64 user_id = 1; // User ID of user.
+  bool ok = 2; // Ok indicate that token is valid.
+}
