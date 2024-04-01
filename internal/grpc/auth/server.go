@@ -7,7 +7,7 @@ import (
 	"service-auth/internal/rpc/login"
 	"service-auth/internal/rpc/signup"
 	"service-auth/internal/rpc/validate"
-	pb "service-auth/pkg/pb"
+	"service-auth/pkg/pb"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
