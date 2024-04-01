@@ -2,7 +2,8 @@ package storage
 
 import (
 	"context"
-	"service-auth/internal/model"
+
+	"github.com/varkis-ms/service-auth/internal/model"
 )
 
 // Repository описывает операции на уровне хранилища

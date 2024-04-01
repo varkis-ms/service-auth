@@ -2,9 +2,10 @@ package signup
 
 import (
 	"context"
-	"service-auth/internal/storage"
-	"service-auth/pkg/logging"
-	pb "service-auth/pkg/pb"
+
+	"github.com/varkis-ms/service-auth/internal/storage"
+	"github.com/varkis-ms/service-auth/pkg/logging"
+	pb "github.com/varkis-ms/service-auth/pkg/pb"
 
 	"golang.org/x/crypto/bcrypt"
 )

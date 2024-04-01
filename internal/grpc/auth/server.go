@@ -3,12 +3,12 @@ package auth
 import (
 	"context"
 	"errors"
-	"service-auth/internal/model"
-	"service-auth/internal/rpc/login"
-	"service-auth/internal/rpc/signup"
-	"service-auth/internal/rpc/validate"
-	"service-auth/pkg/pb"
 
+	"github.com/varkis-ms/service-auth/internal/model"
+	"github.com/varkis-ms/service-auth/internal/rpc/login"
+	"github.com/varkis-ms/service-auth/internal/rpc/signup"
+	"github.com/varkis-ms/service-auth/internal/rpc/validate"
+	pb "github.com/varkis-ms/service-auth/pkg/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"

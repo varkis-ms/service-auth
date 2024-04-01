@@ -2,7 +2,8 @@ package login
 
 import (
 	"context"
-	"service-auth/internal/model"
+
+	"github.com/varkis-ms/service-auth/internal/model"
 )
 
 type Repository interface {

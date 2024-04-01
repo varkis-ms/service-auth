@@ -1,6 +1,6 @@
 package storage
 
-import "service-auth/pkg/database/postgresdb"
+import "github.com/varkis-ms/service-auth/pkg/database/postgresdb"
 
 type Storage struct {
 	db *postgresdb.Postgres

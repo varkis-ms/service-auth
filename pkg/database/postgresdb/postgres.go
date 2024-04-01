@@ -4,8 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"service-auth/internal/config"
 	"time"
+
+	"github.com/varkis-ms/service-auth/internal/config"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"service-auth/internal/app"
+	"github.com/varkis-ms/service-auth/internal/app"
 )
 
 const configsDir = "."

@@ -3,12 +3,13 @@ package grpc
 import (
 	"fmt"
 	"net"
-	authgrpc "service-auth/internal/grpc/auth"
-	"service-auth/internal/rpc/login"
-	"service-auth/internal/rpc/signup"
-	"service-auth/internal/rpc/validate"
 
-	"service-auth/pkg/logging"
+	authgrpc "github.com/varkis-ms/service-auth/internal/grpc/auth"
+	"github.com/varkis-ms/service-auth/internal/rpc/login"
+	"github.com/varkis-ms/service-auth/internal/rpc/signup"
+	"github.com/varkis-ms/service-auth/internal/rpc/validate"
+
+	"github.com/varkis-ms/service-auth/pkg/logging"
 
 	"google.golang.org/grpc"
 )

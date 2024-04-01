@@ -2,11 +2,12 @@ package login
 
 import (
 	"context"
-	"service-auth/internal/model"
-	"service-auth/internal/storage"
-	"service-auth/pkg/logging"
-	pb "service-auth/pkg/pb"
 	"time"
+
+	"github.com/varkis-ms/service-auth/internal/model"
+	"github.com/varkis-ms/service-auth/internal/storage"
+	"github.com/varkis-ms/service-auth/pkg/logging"
+	pb "github.com/varkis-ms/service-auth/pkg/pb"
 
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"

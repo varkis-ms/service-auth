@@ -4,10 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"service-auth/internal/model"
-	"service-auth/pkg/logging"
-	pb "service-auth/pkg/pb"
 	"time"
+
+	"github.com/varkis-ms/service-auth/internal/model"
+	"github.com/varkis-ms/service-auth/pkg/logging"
+	pb "github.com/varkis-ms/service-auth/pkg/pb"
 
 	"github.com/golang-jwt/jwt/v5"
 )

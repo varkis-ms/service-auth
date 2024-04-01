@@ -8,7 +8,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
 
-	"service-auth/internal/model"
+	"github.com/varkis-ms/service-auth/internal/model"
 )
 
 func (s *Storage) SignupToDb(ctx context.Context, email string, passHash []byte) error {

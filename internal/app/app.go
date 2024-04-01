@@ -3,15 +3,16 @@ package app
 import (
 	"os"
 	"os/signal"
-	grpcapp "service-auth/internal/app/grpc"
-	"service-auth/internal/config"
-	"service-auth/internal/rpc/login"
-	"service-auth/internal/rpc/signup"
-	"service-auth/internal/rpc/validate"
-	"service-auth/internal/storage"
-	"service-auth/pkg/database/postgresdb"
-	"service-auth/pkg/logging"
 	"syscall"
+
+	grpcapp "github.com/varkis-ms/service-auth/internal/app/grpc"
+	"github.com/varkis-ms/service-auth/internal/config"
+	"github.com/varkis-ms/service-auth/internal/rpc/login"
+	"github.com/varkis-ms/service-auth/internal/rpc/signup"
+	"github.com/varkis-ms/service-auth/internal/rpc/validate"
+	"github.com/varkis-ms/service-auth/internal/storage"
+	"github.com/varkis-ms/service-auth/pkg/database/postgresdb"
+	"github.com/varkis-ms/service-auth/pkg/logging"
 )
 
 type App struct {
