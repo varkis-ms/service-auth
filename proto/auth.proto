@@ -37,6 +37,6 @@ message ValidateRequest {
 }
 
 message ValidateResponse {
-  int64 user_id = 1; // User ID of user.
+  int64 userID = 1; // User ID of user.
   bool ok = 2; // Ok indicate that token is valid.
 }

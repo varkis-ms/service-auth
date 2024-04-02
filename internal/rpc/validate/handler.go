@@ -73,7 +73,7 @@ func (h *Handler) Handle(ctx context.Context, in *pb.ValidateRequest, out *pb.Va
 			return model.ErrUnauthenticated
 		}
 
-		out.UserId = user.ID
+		out.UserID = user.ID
 		out.Ok = true
 	}
 
