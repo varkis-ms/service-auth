@@ -5,10 +5,11 @@ import (
 	"errors"
 
 	"github.com/varkis-ms/service-auth/internal/model"
+	auth "github.com/varkis-ms/service-auth/internal/pkg/pb"
+
 	"github.com/varkis-ms/service-auth/internal/rpc/login"
 	"github.com/varkis-ms/service-auth/internal/rpc/signup"
 	"github.com/varkis-ms/service-auth/internal/rpc/validate"
-	pb "github.com/varkis-ms/service-auth/pkg/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
@@ -16,7 +17,7 @@ import (
 )
 
 type server struct {
-	pb.UnimplementedAuthServer
+	auth.UnimplementedAuthServer
 	loginHandler    *login.Handler
 	signupHandler   *signup.Handler
 	validateHandler *validate.Handler
@@ -28,7 +29,7 @@ func Register(
 	signupHandler *signup.Handler,
 	validateHandler *validate.Handler,
 ) {
-	pb.RegisterAuthServer(gRPCServer, &server{
+	auth.RegisterAuthServer(gRPCServer, &server{
 		loginHandler:    loginHandler,
 		signupHandler:   signupHandler,
 		validateHandler: validateHandler,
@@ -38,8 +39,8 @@ func Register(
 
 func (s *server) Login(
 	ctx context.Context,
-	in *pb.LoginRequest,
-) (*pb.LoginResponse, error) {
+	in *auth.LoginRequest,
+) (*auth.LoginResponse, error) {
 	if in.GetEmail() == "" {
 		return nil, status.Error(codes.InvalidArgument, "email is required")
 	}
@@ -48,7 +49,7 @@ func (s *server) Login(
 		return nil, status.Error(codes.InvalidArgument, "password is required")
 	}
 
-	out := &pb.LoginResponse{}
+	out := &auth.LoginResponse{}
 	if err := s.loginHandler.Handle(ctx, in, out); err != nil {
 		if errors.Is(err, model.ErrInvalidCredentials) {
 			return nil, status.Error(codes.InvalidArgument, "invalid email or password")
@@ -62,8 +63,8 @@ func (s *server) Login(
 
 func (s *server) Signup(
 	ctx context.Context,
-	in *pb.SignupRequest,
-) (*pb.SignupResponse, error) {
+	in *auth.SignupRequest,
+) (*auth.SignupResponse, error) {
 	if in.Email == "" {
 		return nil, status.Error(codes.InvalidArgument, "email is required")
 	}
@@ -72,7 +73,7 @@ func (s *server) Signup(
 		return nil, status.Error(codes.InvalidArgument, "password is required")
 	}
 
-	out := &pb.SignupResponse{}
+	out := &auth.SignupResponse{}
 	if err := s.signupHandler.Handle(ctx, in, out); err != nil {
 		if errors.Is(err, model.ErrUserExists) {
 			return nil, status.Error(codes.AlreadyExists, "user already exists")
@@ -86,13 +87,13 @@ func (s *server) Signup(
 
 func (s *server) Validate(
 	ctx context.Context,
-	in *pb.ValidateRequest,
-) (*pb.ValidateResponse, error) {
+	in *auth.ValidateRequest,
+) (*auth.ValidateResponse, error) {
 	if in.Token == "" {
 		return nil, status.Error(codes.InvalidArgument, "token is required")
 	}
 
-	out := &pb.ValidateResponse{}
+	out := &auth.ValidateResponse{}
 	if err := s.validateHandler.Handle(ctx, in, out); err != nil {
 		if errors.Is(err, model.ErrUnauthenticated) {
 			return nil, status.Error(codes.Unauthenticated, "user unauthenticated")

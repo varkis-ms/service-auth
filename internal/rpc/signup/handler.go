@@ -2,11 +2,11 @@ package signup
 
 import (
 	"context"
+	"log/slog"
 
+	"github.com/varkis-ms/service-auth/internal/pkg/logger/sl"
+	pb "github.com/varkis-ms/service-auth/internal/pkg/pb"
 	"github.com/varkis-ms/service-auth/internal/storage"
-	"github.com/varkis-ms/service-auth/pkg/logging"
-	pb "github.com/varkis-ms/service-auth/pkg/pb"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -14,12 +14,12 @@ import (
 
 type Handler struct {
 	repo Repository
-	log  *logging.Logger
+	log  *slog.Logger
 }
 
 func New(
 	repo storage.Repository,
-	log *logging.Logger,
+	log *slog.Logger,
 ) *Handler {
 	return &Handler{
 		repo: repo,
@@ -30,17 +30,17 @@ func New(
 // Handle registers new user in the system and returns user ID.
 // If user with given username already exists, returns error.
 func (h *Handler) Handle(ctx context.Context, in *pb.SignupRequest, out *pb.SignupResponse) error {
-	log := h.log.WithField("email", in.Email)
+	log := h.log.With(slog.String("email", in.Email))
 
 	passHash, err := bcrypt.GenerateFromPassword([]byte(in.Password), bcrypt.DefaultCost)
 	if err != nil {
-		log.WithError(err).Info("failed to generate password hash")
+		log.Info("failed to generate password hash", sl.Err(err))
 
 		return err
 	}
 
 	if err := h.repo.SignupToDb(ctx, in.Email, passHash); err != nil {
-		log.WithError(err).Info("failed to save user")
+		log.Info("failed to save user", sl.Err(err))
 
 		return err
 	}

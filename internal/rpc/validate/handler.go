@@ -4,13 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"time"
 
-	"github.com/varkis-ms/service-auth/internal/model"
-	"github.com/varkis-ms/service-auth/pkg/logging"
-	pb "github.com/varkis-ms/service-auth/pkg/pb"
-
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/varkis-ms/service-auth/internal/model"
+	"github.com/varkis-ms/service-auth/internal/pkg/logger/sl"
+	pb "github.com/varkis-ms/service-auth/internal/pkg/pb"
 )
 
 //go:generate go run github.com/vektra/mockery/v2@v2.28.2 --name=UserSaver
@@ -18,13 +18,13 @@ import (
 type Handler struct {
 	repo      Repository
 	secretKey string
-	log       *logging.Logger
+	log       *slog.Logger
 }
 
 func New(
 	repo Repository,
 	secretKey string,
-	log *logging.Logger,
+	log *slog.Logger,
 ) *Handler {
 	return &Handler{
 		repo:      repo,
@@ -61,7 +61,7 @@ func (h *Handler) Handle(ctx context.Context, in *pb.ValidateRequest, out *pb.Va
 		user, err := h.repo.GetUserById(ctx, userID)
 		if err != nil {
 			if !errors.Is(err, model.ErrUserNotFound) {
-				h.log.WithError(err).Error(model.InternalErr)
+				h.log.Error(model.InternalErr.Error(), sl.Err(err))
 
 				return err
 			}

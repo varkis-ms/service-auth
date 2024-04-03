@@ -5,5 +5,5 @@ ADD . /app/
 WORKDIR /app
 RUN go mod download
 RUN go mod tidy
-RUN go build ./cmd/auth
+RUN go build ./cmd/service
 ENTRYPOINT /app/auth

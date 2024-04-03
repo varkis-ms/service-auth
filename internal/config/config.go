@@ -3,6 +3,7 @@ package config
 import "github.com/spf13/viper"
 
 type Config struct {
+	Env        string `mapstructure:"ENV"`
 	Port       int64  `mapstructure:"GRPC_PORT"`
 	PgUser     string `mapstructure:"POSTGRES_USER"`
 	PgPassword string `mapstructure:"POSTGRES_PASSWORD"`

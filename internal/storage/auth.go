@@ -3,7 +3,6 @@ package storage
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
@@ -26,8 +25,7 @@ func (s *Storage) SignupToDb(ctx context.Context, email string, passHash []byte)
 
 	_, err = tx.Exec(ctx, sql, args...)
 	if err != nil {
-		fmt.Println(err.Error())
-		if err.Error() == "ERROR: duplicate key value violates unique constraint \"auth_user_email_key\" (SQLSTATE 23505)" {
+		if err.Error() == errDuplicate {
 			return model.ErrUserExists
 		}
 		// TODO: подумать над ситуацией, когда пользователь уже существует
