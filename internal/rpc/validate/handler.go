@@ -61,7 +61,7 @@ func (h *Handler) Handle(ctx context.Context, in *pb.ValidateRequest, out *pb.Va
 		user, err := h.repo.GetUserById(ctx, userID)
 		if err != nil {
 			if !errors.Is(err, model.ErrUserNotFound) {
-				h.log.Error(model.InternalErr.Error(), sl.Err(err))
+				h.log.Error("repo.GetUserById", sl.Err(err))
 
 				return err
 			}
