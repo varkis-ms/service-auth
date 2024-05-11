@@ -35,7 +35,6 @@ func New(
 		logging.WithLogOnEvents(
 			logging.StartCall, logging.FinishCall,
 		),
-		// Add any other option (check functions starting with logging.With).
 	}
 
 	recoveryOpts := []recovery.Option{

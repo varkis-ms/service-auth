@@ -41,11 +41,6 @@ swagger:
 
 .PHONY: proto
 proto:
-	rm -f pkg/pb/*.go
-	protoc -I proto proto/*.proto --go_out=./pkg/pb --go_opt=paths=source_relative \
-	--go-grpc_out=./pkg/pb --go-grpc_opt=paths=source_relative \
-#	rm -f doc/swagger/*.swagger.json
-#	--grpc-gateway_out=pkg/pb --grpc-gateway_opt=paths=source_relative \
-#	--openapiv2_out=doc/swagger \
-#	--openapiv2_opt logtostderr=true --openapiv2_opt use_go_templates=true \
-#	proto/shortener.proto
+	rm -f internal/pkg/pb/*.go
+	protoc -I proto proto/*.proto --go_out=./internal/pkg/pb --go_opt=paths=source_relative \
+	--go-grpc_out=./internal/pkg/pb --go-grpc_opt=paths=source_relative

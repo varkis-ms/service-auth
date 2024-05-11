@@ -10,10 +10,10 @@ import (
 	"github.com/varkis-ms/service-auth/internal/model"
 )
 
-func (s *Storage) SignupToDb(ctx context.Context, email string, passHash []byte) error {
+func (s *Storage) SignupToDb(ctx context.Context, email string, passHash []byte) (int64, error) {
 	tx, err := s.db.Pool.Begin(ctx)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
 
@@ -21,18 +21,20 @@ func (s *Storage) SignupToDb(ctx context.Context, email string, passHash []byte)
 		Insert("auth_user").
 		Columns("email", "pass_hash").
 		Values(email, passHash).
+		Suffix("Returning id").
 		ToSql()
 
-	_, err = tx.Exec(ctx, sql, args...)
+	var userID int64
+	err = tx.QueryRow(ctx, sql, args...).Scan(&userID)
 	if err != nil {
 		if err.Error() == errDuplicate {
-			return model.ErrUserExists
+			return 0, model.ErrUserExists
 		}
 		// TODO: подумать над ситуацией, когда пользователь уже существует
-		return err
+		return 0, err
 	}
 
-	return tx.Commit(ctx)
+	return userID, tx.Commit(ctx)
 }
 
 func (s *Storage) GetUserByEmail(ctx context.Context, email string) (*model.User, error) {

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth;
 
-option go_package = "github.com/varkis-ms/service-auth/pkg/pb;auth";
+option go_package = "github.com/varkis-ms/service-auth/internal/pkg/pb;auth";
 
 // Auth is service for managing permissions and roles.
 service Auth {
@@ -15,16 +15,16 @@ service Auth {
 }
 
 message SignupRequest {
-  string email = 1; // Email of the user to register.
+  string email = 1;    // Email of the user to register.
   string password = 2; // Password of the user to register.
 }
 
 message SignupResponse {
-  bool ok = 1; // Ok indicate that user has been registered.
+  int64 userID = 1; // User ID of user.
 }
 
 message LoginRequest {
-  string email = 1; // Email of the user to login.
+  string email = 1;    // Email of the user to login.
   string password = 2; // Password of the user to login.
 }
 
@@ -38,5 +38,5 @@ message ValidateRequest {
 
 message ValidateResponse {
   int64 userID = 1; // User ID of user.
-  bool ok = 2; // Ok indicate that token is valid.
 }
+

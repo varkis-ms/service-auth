@@ -39,12 +39,13 @@ func (h *Handler) Handle(ctx context.Context, in *pb.SignupRequest, out *pb.Sign
 		return err
 	}
 
-	if err := h.repo.SignupToDb(ctx, in.Email, passHash); err != nil {
+	userID, err := h.repo.SignupToDb(ctx, in.Email, passHash)
+	if err != nil {
 		log.Info("failed to save user", sl.Err(err))
 
 		return err
 	}
 
-	out.Ok = true
+	out.UserID = userID
 	return nil
 }
